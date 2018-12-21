@@ -1,3 +1,8 @@
 _data_testing.js
 node_modules
 package-lock.json
+bundle.js
+.prettierrc
+.babelrc
+.eslintrc.json
+mockups
