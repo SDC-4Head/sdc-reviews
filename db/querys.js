@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-// const { Review } = require('../db/utilities/dataSeed.jss');
 
 const db = mongoose.connect(
   'mongodb://127.0.0.1:27017/errbnb',
