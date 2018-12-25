@@ -1,0 +1,26 @@
+table {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.stars {
+  color: #008489;
+  position: relative;
+  left: 50px;
+  width: 100px;
+  letter-spacing: 0.25em;
+  font-size: 18px;
+  
+  /* margin-left: 10px; */
+}
+
+.categories {
+  width: 100px;
+  font-family: 'Lato', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+#thirdcolumn {
+  padding-left: 35px;
+}

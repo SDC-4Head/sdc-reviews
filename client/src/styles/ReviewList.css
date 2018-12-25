@@ -1,0 +1,40 @@
+*:focus {
+  outline: none;
+  }
+  
+
+#sorting {
+  height: 35px;
+  margin-top: 25px;
+  padding-bottom: 25px;
+  border-bottom: 1px solid #e7e7e7; 
+}
+
+.searchBar input{
+  width: 175px;
+  height: 33px;
+  border: 1px solid #e7e7e7;
+  border-radius: 3px;
+  display: inline-block;
+  float: left;
+  padding-left: 35px;
+  font-size: 14px;
+  background-image: url('https://image.flaticon.com/icons/svg/126/126474.svg');
+  background-repeat: no-repeat;
+  background-position: 10px 10px;
+  background-size: 15px;
+}
+
+.searchBar input:focus{
+  border: 1px solid #008489;
+}
+
+#sortby {
+  width: 180px;
+  height: 38px;
+  background-color: #fff;
+  border: 1px solid #e7e7e7;
+  font-size: 13px;
+  display: inline-block;
+  float: right;
+}

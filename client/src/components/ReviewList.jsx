@@ -6,6 +6,7 @@
 import React from 'react';
 import $ from 'jquery';
 import ReviewItem from './ReviewItem.jsx';
+import Styles from '../styles/ReviewList.css';
 
 class ReviewList extends React.Component {
   constructor(props) {
@@ -114,18 +115,20 @@ class ReviewList extends React.Component {
 
     return (
       <div>
-        <form onSubmit={this.onSearch}>
-          <input
-            type="text"
-            placeholder="Search Reviews"
-            value={searchValue}
-            onChange={this.handleChange}
-          />
-        </form>
-        <select id="sortby" onChange={this.onSort}>
-          <option value="relevant">Most Relevant</option>
-          <option value="recent">Most Recent</option>
-        </select>
+        <div id="sorting">
+          <form className="searchBar" onSubmit={this.onSearch}>
+            <input
+              type="text"
+              placeholder="Search Reviews"
+              value={searchValue}
+              onChange={this.handleChange}
+            />
+          </form>
+          <select id="sortby" onChange={this.onSort}>
+            <option value="relevant">Most Relevant</option>
+            <option value="recent">Most Recent</option>
+          </select>
+        </div>
         <div>
           {Array.isArray(reviewsToDisplay) ? (
             reviewsToDisplay.map(review => <ReviewItem review={review} />)

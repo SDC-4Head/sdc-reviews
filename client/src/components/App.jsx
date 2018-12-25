@@ -5,10 +5,12 @@
 // This component is the highest-level app that is responsible for assembling
 // each individual component. This is what is ultimately rendered onto the HTML page.
 import React from 'react';
+import CSSModules from 'react-css-modules';
 import $ from 'jquery';
 import ReviewSummary from './ReviewSummary.jsx';
 import ReviewBreakdown from './ReviewBreakdown.jsx';
 import ReviewList from './ReviewList.jsx';
+import styles from '../styles/App.css';
 
 class App extends React.Component {
   constructor(props) {
@@ -38,7 +40,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="reviewsService">
         <ReviewSummary ratings={this.state.ratings} />
         <ReviewBreakdown breakdown={this.state.reviewBreakdown} />
         <ReviewList />
