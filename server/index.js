@@ -15,8 +15,6 @@ app.get('/api/reviews/rooms/:roomid', (req, res) => {
   const { search } = req.query;
   const { sortby } = req.query || 'relevant';
 
-  console.log(req.query);
-
   query
     .getAllReviews(roomid)
     .then(allReviews =>
