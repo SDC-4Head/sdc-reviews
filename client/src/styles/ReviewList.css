@@ -38,3 +38,35 @@
   display: inline-block;
   float: right;
 }
+
+#pagination {
+  text-align: center;
+}
+.pageBtn {
+  box-sizing: border-box;
+  text-align: center;
+  display: inline-block;
+  height: 35px;
+  width: 35px;
+  margin: 25px 10px 25px 10px;
+  color: #008489;
+  font-family: 'Lato', sans-serif;
+  font-size: 16px;  
+  padding-top: 6px;
+}
+
+.navArrow {
+  border: 1px solid #008489;
+  border-radius: 50%;
+}
+
+.hidden {
+  display: none;
+}
+
+.active {
+  border: 1px solid #008489;
+  border-radius: 50%;
+  background-color: #008489;
+  color: #fff;
+}

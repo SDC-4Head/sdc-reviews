@@ -1,3 +1,8 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable react/jsx-indent */
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable prettier/prettier */
+/* eslint-disable react/prop-types */
 /* eslint-disable class-methods-use-this */
 // This component is responsible for displaying each individual review including the body,
 // the user's name, the user's photo, the date they stayed, and the "flag" option.

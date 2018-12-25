@@ -20,6 +20,8 @@ class ReviewList extends React.Component {
     this.onSort = this.onSort.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.findAndReplaceParam = this.findAndReplaceParam.bind(this);
+    this.incrementPage = this.incrementPage.bind(this);
+    // this.decrementPage = this.decrementPage.bind(this);
   }
 
   componentDidMount() {
@@ -109,9 +111,36 @@ class ReviewList extends React.Component {
     });
   }
 
+  incrementPage(event, value) {
+    event.preventDefault();
+    if (value > 0 || this.state.page > 1) {
+      this.setState({
+        page: (this.state.page += value)
+      });
+    }
+
+    const url = window.location.href.split('?');
+    const { page } = this.state;
+    const base = url[0]; // > "www.url.com"
+    const qs = url[1]; // > "// > "sortby=relevant&&search=dolor""
+
+    if (qs === undefined) {
+      const newQs = `page=${page}`;
+      const newUrl = `${base}?${newQs}`;
+      window.history.replaceState({}, '', newUrl);
+    } else {
+      const newQs = this.findAndReplaceParam('page', page);
+      const newUrl = `${base}?${newQs}`;
+      window.history.replaceState({}, '', newUrl);
+    }
+    this.getReviews(window.location.pathname + window.location.search);
+  }
+
+
   render() {
     const { reviewsToDisplay } = this.state;
     const { searchValue } = this.state;
+    const { reviewQty } = this.props;
 
     return (
       <div>
@@ -135,6 +164,18 @@ class ReviewList extends React.Component {
           ) : (
             <p>reviews loading...</p>
           )}
+        </div>
+        <div id="pagination">
+            <div className="pageBtn navArrow"><a href="" onClick={() => this.incrementPage(event, -1)}>«</a></div>
+            <div className="pageBtn">1</div>
+            <div className="pageBtn active">2</div>
+            <div className="pageBtn">3</div>
+            <div className="pageBtn">4</div>
+            <div className="pageBtn">5</div>
+            <div className="pageBtn">6</div>
+            <div className="pageBtn">7</div>
+            <div className="pageBtn">8</div>
+            <div className="pageBtn navArrow"><a href="" onClick={() => this.incrementPage(event, 1)}>»</a></div>
         </div>
       </div>
     );
