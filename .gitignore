@@ -6,3 +6,4 @@ bundle.js
 .babelrc
 .eslintrc.json
 mockups
+jest.config.js
