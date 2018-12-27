@@ -160,7 +160,7 @@ class ReviewList extends React.Component {
         </div>
         <div>
           {Array.isArray(reviewsToDisplay) ? (
-            reviewsToDisplay.map(review => <ReviewItem review={review} />)
+            reviewsToDisplay.map((review, index) => <ReviewItem review={review} id={index} />)
           ) : (
             <p>reviews loading...</p>
           )}

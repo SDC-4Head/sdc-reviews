@@ -44,7 +44,7 @@ class App extends React.Component {
     return (
       <div className="reviewsService">
         <ReviewSummary ratings={this.state.ratings} />
-        <ReviewBreakdown breakdown={this.state.reviewBreakdown} />
+        <ReviewBreakdown ratings={this.state.ratings} />
         <ReviewList reviewQty={this.state.ratings.quantity} />
       </div>
     );
