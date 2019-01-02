@@ -12,7 +12,7 @@ import ReviewList from './ReviewList.jsx';
 // eslint-disable-next-line no-unused-vars
 import styles from '../styles/App.css';
 
-class App extends React.Component {
+class Reviews extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -51,4 +51,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default Reviews;

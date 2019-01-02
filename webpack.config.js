@@ -19,7 +19,7 @@ module.exports = {
     ]
   },
   output: {
-    filename: 'bundle.js',
+    filename: 'reviews.js',
     path: path.resolve(__dirname, 'public/dist')
   }
 };
