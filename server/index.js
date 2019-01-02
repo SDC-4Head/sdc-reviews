@@ -1,5 +1,4 @@
 const express = require('express');
-const path = require('path');
 const bodyParser = require('body-parser');
 const query = require('../db/querys.js');
 
@@ -9,18 +8,18 @@ const port = 3124;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/rooms/:roomid', express.static('./public/dist'));
 
-app.get('/api/reviews/rooms/:roomid', (req, res) => {
+app.get('/api/reviews/rooms/:roomid/', (req, res) => {
   const { roomid } = req.params;
   const { page } = req.query;
   const { search } = req.query;
   const { sortby } = req.query || 'relevant';
 
-  console.log(req.query);
-
   query
     .getAllReviews(roomid)
     .then(allReviews =>
-      sortby === 'relevant' ? query.sortByRelevant(allReviews) : query.sortByRecent(allReviews)
+      sortby === 'relevant' || sortby === undefined
+        ? query.sortByRelevant(allReviews)
+        : query.sortByRecent(allReviews)
     )
     .then(sortedReviews => query.getBySearchTerm(sortedReviews, search))
     .then(sortedReviews => query.getPage(page, sortedReviews))
@@ -34,7 +33,6 @@ app.get('/api/reviews/rooms/:roomid', (req, res) => {
 
 app.get('/api/ratings/rooms/:roomid', (req, res) => {
   const { roomid } = req.params;
-
   query
     .getAllReviews(roomid)
     .then(allReviews => res.send(query.calculateAverageRating(allReviews)))

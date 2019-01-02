@@ -22,6 +22,33 @@ const avatars = [
   'https://a0.muscache.com/im/pictures/ac8665ce-e787-4766-b456-eae390613d99.jpg?aki_policy=profile_x_medium'
 ];
 
+const months = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+];
+
+const years = [
+  '2018',
+  '2017',
+  '2016',
+  '2015',
+  '2014',
+  '2013',
+  '2012',
+  '2011',
+  '2010'
+]
+
 const reviewSchema = new Schema({
   roomId: Number,
   relevance: Number,
@@ -60,7 +87,7 @@ const generateReviewDocuments = qty => {
       relevance: generateRandomNumber(1, 10),
       name: faker.name.firstName(),
       userAvatar: avatars[generateRandomNumber(0, 10)],
-      dateStayed: faker.date.past(),
+      dateStayed: `${months[generateRandomNumber(0, 11)]} ${years[generateRandomNumber(0, 8)]}`,
       review: [
         {
           accuracy: generateRandomNumber(1, 5),

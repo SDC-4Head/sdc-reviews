@@ -6,12 +6,9 @@ table {
 .stars {
   color: #008489;
   position: relative;
-  left: 50px;
+  left: 28px;
   width: 100px;
   letter-spacing: 0.25em;
-  font-size: 18px;
-  
-  /* margin-left: 10px; */
 }
 
 .categories {

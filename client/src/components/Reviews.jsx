@@ -5,14 +5,14 @@
 // This component is the highest-level app that is responsible for assembling
 // each individual component. This is what is ultimately rendered onto the HTML page.
 import React from 'react';
-import CSSModules from 'react-css-modules';
 import $ from 'jquery';
 import ReviewSummary from './ReviewSummary.jsx';
 import ReviewBreakdown from './ReviewBreakdown.jsx';
 import ReviewList from './ReviewList.jsx';
+// eslint-disable-next-line no-unused-vars
 import styles from '../styles/App.css';
 
-class App extends React.Component {
+class Reviews extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -34,7 +34,9 @@ class App extends React.Component {
           ratings: data
         });
       },
-      error: () => console.log('There was an error fetching the ratings', err)
+      error: err => {
+        throw err;
+      }
     });
   }
 
@@ -42,11 +44,11 @@ class App extends React.Component {
     return (
       <div className="reviewsService">
         <ReviewSummary ratings={this.state.ratings} />
-        <ReviewBreakdown breakdown={this.state.reviewBreakdown} />
-        <ReviewList />
+        <ReviewBreakdown ratings={this.state.ratings} />
+        <ReviewList reviewQty={this.state.ratings.quantity} />
       </div>
     );
   }
 }
 
-export default App;
+export default Reviews;
