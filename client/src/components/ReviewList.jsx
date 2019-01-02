@@ -5,6 +5,7 @@
 // each review, and finally, the pagination controls.
 import React from 'react';
 import $ from 'jquery';
+import queryString from 'query-string';
 import ReviewItem from './ReviewItem.jsx';
 import Styles from '../styles/ReviewList.css';
 
@@ -14,14 +15,15 @@ class ReviewList extends React.Component {
     this.state = {
       reviewsToDisplay: {},
       searchValue: '',
-      page: 1
+      page: Number(queryString.parse(location.search).page) || 1
     };
+
     this.onSearch = this.onSearch.bind(this);
     this.onSort = this.onSort.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.findAndReplaceParam = this.findAndReplaceParam.bind(this);
-    this.incrementPage = this.incrementPage.bind(this);
-    // this.decrementPage = this.decrementPage.bind(this);
+    this.goToPage = this.goToPage.bind(this);
+    this.fetchNewReviews = this.fetchNewReviews.bind(this);
   }
 
   componentDidMount() {
@@ -38,14 +40,15 @@ class ReviewList extends React.Component {
     const qs = url[1]; // > "// > "sortby=relevant&&search=dolor""
 
     if (searchValue === '') {
-      window.history.replaceState({}, '', base);
-      this.getReviews(window.location.pathname + window.location.search);
+      const newQs = this.findAndReplaceParam('search', '', true);
+      const newUrl = `${base}?${newQs}`;
+      window.history.replaceState({}, '', newUrl);
     } else if (qs === undefined) {
       const newQs = `search=${searchValue}`;
       const newUrl = `${base}?${newQs}`;
       window.history.replaceState({}, '', newUrl);
     } else {
-      const newQs = this.findAndReplaceParam('search', searchValue);
+      const newQs = this.findAndReplaceParam('search', searchValue, false);
       const newUrl = `${base}?${newQs}`;
       window.history.replaceState({}, '', newUrl);
     }
@@ -74,8 +77,6 @@ class ReviewList extends React.Component {
     this.getReviews(window.location.pathname + window.location.search);
   }
 
-  // onPageFlip(event) {}
-
   getReviews(path, searchterm = null) {
     $.ajax({
       url: `/api/reviews${path}`,
@@ -90,19 +91,27 @@ class ReviewList extends React.Component {
     });
   }
 
-  findAndReplaceParam(param, value) {
+  findAndReplaceParam(param, value, remove) {
     const qs = window.location.search.slice(1).split('&&'); // > "[sortby=relevant, search=dolor]"
     let added = false;
-    qs.forEach((parameter, i) => {
-      if (parameter.includes(param)) {
-        qs[i] = `${param}=${value}`;
-        added = true;
+    if (!remove) {
+      qs.forEach((parameter, i) => {
+        if (parameter.includes(param)) {
+          qs[i] = `${param}=${value}`;
+          added = true;
+        }
+      });
+      if (!added) {
+        qs.push(`${param}=${value}`);
       }
-    });
-    if (!added) {
-      qs.push(`${param}=${value}`);
+    } else if (remove) {
+      qs.forEach((parameter, i) => {
+        if (parameter.includes(param)) {
+          qs.splice(i, 1);
+        }
+      });
     }
-    return qs.join('&&');
+    return qs.length > 1 ? qs.join('&&') : qs.join();
   }
 
   handleChange(event) {
@@ -111,14 +120,7 @@ class ReviewList extends React.Component {
     });
   }
 
-  incrementPage(event, value) {
-    event.preventDefault();
-    if (value > 0 || this.state.page > 1) {
-      this.setState({
-        page: (this.state.page += value)
-      });
-    }
-
+  fetchNewReviews() {
     const url = window.location.href.split('?');
     const { page } = this.state;
     const base = url[0]; // > "www.url.com"
@@ -136,11 +138,65 @@ class ReviewList extends React.Component {
     this.getReviews(window.location.pathname + window.location.search);
   }
 
+  goToPage(value) {
+    this.setState({ page: value }, this.fetchNewReviews);
+  }
+
+  renderPaginationButtons() {
+    const { reviewQty } = this.props;
+    const { page } = this.state;
+    const lastPage = Math.ceil(reviewQty / 7);
+    const back = <div className="pageBtn navArrow" onClick={() => {this.goToPage(page - 1)}}>«</div>;
+    const forward = <div className="pageBtn navArrow" onClick={() => {this.goToPage(page + 1)}}>»</div>;
+    const first = <div className="pageBtn navArrow" onClick={() => {this.goToPage(1)}}>1</div>;
+    const last = <div className="pageBtn navArrow" onClick={() => {this.goToPage(lastPage)}}>{lastPage}</div>;
+    const buttons = [];
+
+    if (page > 1) {
+      buttons.push(back);
+    }
+
+    buttons.push(first);
+
+    if (page < 3) {
+      buttons.push(<div className="pageBtn navArrow" onClick={() => {this.goToPage(2)}}>2</div>);
+      buttons.push(<div className="pageBtn navArrow" onClick={() => {this.goToPage(3)}}>3</div>);
+    }
+
+    if (page > 4) {
+      buttons.push(<div className="pageBtn">...</div>);
+    }
+
+    if (page >= 3 && page < lastPage - 3) {
+      for (let i = page - 1; i <= page + 1; i += 1) {
+        buttons.push(<div className="pageBtn navArrow" onClick={() => {this.goToPage(i)}}>{i}</div>);
+      }
+    }
+
+    if (page < lastPage - 3) {
+      buttons.push(<div className="pageBtn">...</div>);
+    }
+
+    if (page >= lastPage - 3) {
+      buttons.push(<div className="pageBtn navArrow" onClick={() => {this.goToPage(lastPage - 2)}}>{lastPage - 2}</div>);
+      buttons.push(<div className="pageBtn navArrow" onClick={() => {this.goToPage(lastPage - 1)}}>{lastPage - 1}</div>);
+    }
+
+    buttons.push(last);
+
+    if (page < lastPage) {
+      buttons.push(forward);
+    }
+
+    return buttons;
+  }
 
   render() {
     const { reviewsToDisplay } = this.state;
     const { searchValue } = this.state;
+    const { page } = this.state;
     const { reviewQty } = this.props;
+    const lastPage = Math.floor(reviewQty / 7);
 
     return (
       <div>
@@ -158,6 +214,9 @@ class ReviewList extends React.Component {
             <option value="recent">Most Recent</option>
           </select>
         </div>
+        {/* <div id="searchSummary">
+          <p>{reviewQty} guests have mentioned "{searchValue}"</p>
+        </div> */}
         <div>
           {Array.isArray(reviewsToDisplay) ? (
             reviewsToDisplay.map((review, index) => <ReviewItem review={review} id={index} />)
@@ -165,18 +224,7 @@ class ReviewList extends React.Component {
             <p>reviews loading...</p>
           )}
         </div>
-        <div id="pagination">
-            <div className="pageBtn navArrow"><a href="" onClick={() => this.incrementPage(event, -1)}>«</a></div>
-            <div className="pageBtn">1</div>
-            <div className="pageBtn active">2</div>
-            <div className="pageBtn">3</div>
-            <div className="pageBtn">4</div>
-            <div className="pageBtn">5</div>
-            <div className="pageBtn">6</div>
-            <div className="pageBtn">7</div>
-            <div className="pageBtn">8</div>
-            <div className="pageBtn navArrow"><a href="" onClick={() => this.incrementPage(event, 1)}>»</a></div>
-        </div>
+        <div id="pagination">{this.renderPaginationButtons()}</div>
       </div>
     );
   }

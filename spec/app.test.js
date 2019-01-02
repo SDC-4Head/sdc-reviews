@@ -14,17 +14,17 @@ describe('Unit Tests', () => {
 
     test('Should sort reviews by Most Recent', () => {
       const recentData = [
-        { dateStayed: 'Wed May 16 2018 20:13:58 GMT-0700 (Pacific Daylight Time)' },
-        { dateStayed: 'Wed Feb 14 2004 20:13:58 GMT-0700 (Pacific Daylight Time)' },
-        { dateStayed: 'Wed Jan 1 2014 20:13:58 GMT-0700 (Pacific Daylight Time)' }
+        { dateStayed: 'March 2018' },
+        { dateStayed: 'February 2014' },
+        { dateStayed: 'April 2015' }
       ];
 
       expect.assertions(1);
       return query.sortByRecent(recentData).then(sortedReviews => {
         expect(sortedReviews).toEqual([
-          { dateStayed: 'Wed May 16 2018 20:13:58 GMT-0700 (Pacific Daylight Time)' },
-          { dateStayed: 'Wed Jan 1 2014 20:13:58 GMT-0700 (Pacific Daylight Time)' },
-          { dateStayed: 'Wed Feb 14 2004 20:13:58 GMT-0700 (Pacific Daylight Time)' }
+          { dateStayed: 'March 2018' },
+          { dateStayed: 'April 2015' },
+          { dateStayed: 'February 2014' }
         ]);
       });
     });
