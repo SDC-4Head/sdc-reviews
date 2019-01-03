@@ -25,7 +25,7 @@ const ReviewBreakdown = props => {
 
   return (
     <div>
-      <table>
+      <table id="starTable">
         <tbody>
           <tr>
             <td className="categories">Accuracy</td>

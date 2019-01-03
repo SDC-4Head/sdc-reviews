@@ -1,6 +1,10 @@
-table {
+#starTable {
   margin-top: 10px;
   width: 100%;
+}
+
+.categories {
+  border: none;
 }
 
 .stars {
@@ -9,6 +13,7 @@ table {
   left: 28px;
   width: 100px;
   letter-spacing: 0.25em;
+  border: none;
 }
 
 .categories {
