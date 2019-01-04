@@ -8,9 +8,11 @@
     "node": ">=6.13.0"
   },
   "scripts": {
-    "build": "webpack --watch",
     "seed": "node ./db/utilities/dataseed.js",
-    "start": "nodemon ./server/index.js",
+    "builddev": "webpack --watch",
+    "startdev": "nodemon ./server/index.js",
+    "build": "webpack",
+    "start": "npm run seed && node ./server/index.js",
     "test": "jest --watch"
   },
   "dependencies": {
@@ -41,7 +43,6 @@
     "eslint": "^5.6.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
     "eslint-config-prettier": "^3.3.0",
     "eslint-config-react-app": "^3.0.5",
     "eslint-plugin-flowtype": "^2.50.3",
