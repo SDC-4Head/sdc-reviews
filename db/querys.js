@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
+const domain = process.env.DOMAIN || '172.17.0.4';
 
 const db = mongoose.connect(
-  'mongodb://127.0.0.1:27017/errbnb',
+  `mongodb://${domain}:27017/errbnb`,
   { useNewUrlParser: true }
 );
 

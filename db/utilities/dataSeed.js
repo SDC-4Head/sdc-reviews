@@ -1,9 +1,10 @@
 /* eslint-disable prefer-destructuring */
 const faker = require('faker');
 const mongoose = require('mongoose');
+const domain = process.env.DOMAIN || '172.17.0.4';
 
 const db = mongoose.connect(
-  'mongodb://127.0.0.1:27017/errbnb',
+  `mongodb://${domain}:27017/errbnb`,
   { useNewUrlParser: true }
 );
 const Schema = mongoose.Schema;
@@ -37,17 +38,7 @@ const months = [
   'December'
 ];
 
-const years = [
-  '2018',
-  '2017',
-  '2016',
-  '2015',
-  '2014',
-  '2013',
-  '2012',
-  '2011',
-  '2010'
-]
+const years = ['2018', '2017', '2016', '2015', '2014', '2013', '2012', '2011', '2010'];
 
 const reviewSchema = new Schema({
   roomId: Number,
