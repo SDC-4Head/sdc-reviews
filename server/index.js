@@ -43,4 +43,23 @@ app.get('/api/ratings/rooms/:roomid', (req, res) => {
     });
 });
 
+app.put('/api/reviews/rooms/:roomId'), (req, res) => {
+  const { roomid } = req.params;
+  // const { page } = req.query;
+  // const { search } = req.query;
+  // const { sortby } = req.query || 'relevant';
+
+
+};
+
+app.post('/api/reviews/rooms/:roomId'), (req, res) => {
+  const { roomid } = req.params;
+
+};
+
+app.delete('/api/reviews/rooms/:roomId'), (req, res) => {
+  const { roomid } = req.params;
+
+};
+
 app.listen(port, () => console.log(`Listening on http://localhost:${port}`));
