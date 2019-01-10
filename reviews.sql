@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS rooms (
   roomid SERIAL PRIMARY KEY,
   reviewid INTEGER REFERENCES reviews(reviewid),
   accuracy INTEGER,
-  chekin INTEGER,
+  checkin INTEGER,
   cleanliness INTEGER,
   communication INTEGER,
   location INTEGER,
@@ -39,6 +39,6 @@ COPY reviews (userid, relevance, body, date)
 FROM '/Users/francisdistor/Desktop/immersive/sdc/hrsf107-fec-reviews/review.csv' 
 DELIMITER ',' CSV;
 
-COPY rooms (reviewid, accuracy, chekin, cleanliness, communication, location, overall, quality, value)
+COPY rooms (reviewid, accuracy, checkin, cleanliness, communication, location, overall, quality, value)
 FROM '/Users/francisdistor/Desktop/immersive/sdc/hrsf107-fec-reviews/room.csv' 
 DELIMITER ',' CSV;
