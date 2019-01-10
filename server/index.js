@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const query = require('../db/querys.js');
+const pg = require('../db/pool.js');
 
 const app = express();
 const port = 3124;
@@ -33,14 +34,18 @@ app.get('/api/reviews/rooms/:roomid/', (req, res) => {
 
 app.get('/api/ratings/rooms/:roomid', (req, res) => {
   const { roomid } = req.params;
-  query
-    .getAllReviews(roomid)
-    .then(allReviews => res.send(query.calculateAverageRating(allReviews)))
-    .catch(err => {
-      if (err) {
-        throw err;
-      }
-    });
+  pg
+    .getReviews(roomid)
+    .then(reviews => console.log(reviews))
+    .catch(err => { if (err) { throw err; } });
+  // query
+  //   .getAllReviews(roomid)
+  //   .then(allReviews => res.send(query.calculateAverageRating(allReviews)))
+  //   .catch(err => {
+  //     if (err) {
+  //       throw err;
+  //     }
+  //   });
 });
 
 app.put('/api/reviews/rooms/:roomId'), (req, res) => {
