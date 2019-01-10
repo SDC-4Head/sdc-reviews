@@ -15,6 +15,15 @@
 1. [Requirements](#requirements)
 1. [Development](#development)
 
+## API Routing
+
+|            ROUTE           |   METHOD    |
+|----------------------------|-------------|
+| /api/reviews/rooms/:roomid/|     GET     |
+| /api/reviews/rooms/:roomId |     PUT     |
+| /api/reviews/rooms/:roomId |     POST    |
+| /api/reviews/rooms/:roomId |    DELETE   |
+
 ## Usage
 
 > Some usage instructions
