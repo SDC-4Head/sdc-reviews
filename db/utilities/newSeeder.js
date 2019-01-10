@@ -1,8 +1,6 @@
 const faker = require('faker');
 const fs = require('fs');
 
-const domain = 'localhost';
-
 const avatars = [
   'https://a0.muscache.com/im/users/3272332/profile_pic/1366680802/original.jpg?aki_policy=profile_x_medium',
   'https://a0.muscache.com/im/pictures/user/c76d5746-59f9-4af2-b8cb-55fd1bc4c45b.jpg?aki_policy=profile_x_medium',
