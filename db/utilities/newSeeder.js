@@ -58,7 +58,7 @@ let count = 3e7 + 1;
 
 const write = () => {
   while (count > 0) {
-    const review = `${generateRandomNumber(1, 2e6 + 1)},${generateRandomNumber(0, 10)},${faker.lorem.paragraph(generateRandomNumber(1, 4))},${months[generateRandomNumber(0, 11)]} ${years[generateRandomNumber(0, 8)]}\n`;
+    const review = `${generateRandomNumber(1, 2e6 + 1)},${generateRandomNumber(0, 10)},Hello WORLD,${months[generateRandomNumber(0, 11)]} ${years[generateRandomNumber(0, 8)]}\n`;
     if (!reviewStream.write(review)) { return; }
     if (count < 2e6 + 1) {
       const user = `${faker.name.firstName()}, ${avatars[generateRandomNumber(0, 10)]}\n`
