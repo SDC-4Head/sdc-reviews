@@ -52,32 +52,111 @@ const generateRandomNumber = (min, max) => {
   return randomNumber;
 };
 
-let reviewHeaders = ['roomId', 'relevance', 'name', 'userAvatar', 'dateStayed'];
-let numberHeaders = ['accuracy', 'communication', 'cleanliness', 'location', 'checkin', 'value', 'body'];
-let reviewResult = [];
-let numberResult = [];
+const userStream = fs.createWriteStream('user.csv', {flags: 'w'}); 
+const reviewStream = fs.createWriteStream('review.csv', {flags: 'w'});
+const roomStream = fs.createWriteStream('room.csv', {flags: 'w'});
 
-reviewResult.push(reviewHeaders);
-numberResult.push(numberHeaders);
+// let userCount = 2e6 + 1;
+// let reviewCount = 3e7 + 1;
+
+let count = 3e7 + 1;
+
+// const userWrite = () => {
+//   while (count > 0) {
+//     const user = `${faker.name.firstName()}, ${avatars[generateRandomNumber(0, 10)]}\n`
+//     userStream.write(user);
+//   }
+//   userStream.end();
+// }
+
+const write = () => {
+  while (count > 0) {
+    const review = `${generateRandomNumber(1, 2e6 + 1)},${generateRandomNumber(0, 10)},${faker.lorem.paragraph(generateRandomNumber(1, 4))},${months[generateRandomNumber(0, 11)]} ${years[generateRandomNumber(0, 8)]}\n`;
+    if (!reviewStream.write(review)) { return; }
+    if (count < 2e6 + 1) {
+      const user = `${faker.name.firstName()}, ${avatars[generateRandomNumber(0, 10)]}\n`
+      if (!userStream.write(user)) { return; }
+    }
+    if (count < 1e7 + 1) {
+      const room = `${count},${generateRandomNumber(1, 5)},${generateRandomNumber(1, 5)},${generateRandomNumber(1, 5)},${generateRandomNumber(1, 5)},${generateRandomNumber(1, 5)},${generateRandomNumber(1, 5)},${generateRandomNumber(1, 5)},${generateRandomNumber(1, 5)}\n`
+      if (!roomStream.write(room)) { return; }
+    }
+    count--;
+  }
+  userStream.end();
+  reviewStream.end();
+  roomStream.end();
+};
+
+userStream.on('drain', () => write());
+reviewStream.on('drain', () => write());
+roomStream.on('drain', () => write());
+
+write();
+
+// for (let i = 1; i < 1e5 + 1; i++) {
+//   const room = 
+//   `${i},\
+//     ${generateRandomNumber(1, 5)},\
+//     ${generateRandomNumber(1, 5)},\
+//     ${generateRandomNumber(1, 5)},\
+//     ${generateRandomNumber(1, 5)},\
+//     ${generateRandomNumber(1, 5)},\
+//     ${generateRandomNumber(1, 5)},\
+//     ${generateRandomNumber(1, 5)},\
+//     ${generateRandomNumber(1, 5)}\n\
+//   `
+//   roomStream.write(room);
+// }
+// roomStream.end();
+
+//////////////////////////////////
+//////////////////////////////////
+//////////////////////////////////
+
+// let userHeaders = ['firstName', 'profilepic'];
+// let reviewHeaders = ['userId', 'relevance', 'body', 'date'];
+// let roomHeaders = [
+//   'reviewId', 
+//   'accuracy', 
+//   'checkin', 
+//   'communication', 
+//   'cleanliness', 
+//   'location', 
+//   'overall', 
+//   'quantity', 
+//   'value'
+// ];
+
+// let userResult = [];
+// let reviewResult = [];
+// let roomResult = [];
+
+// userResult.push(userHeaders); 
+// reviewResult.push(reviewHeaders);
+// roomResult.push(roomHeaders);
 
 
-for (let i = 1; i < 100; i++) {
-  reviewResult.push([
-    i,
-    generateRandomNumber(1, 10),
-    faker.name.firstName(),
-    avatars[generateRandomNumber(0, 10)],
-    `${months[generateRandomNumber(0, 11)]} ${years[generateRandomNumber(0, 8)]}`
-  ]);
-  numberResult.push([
-    generateRandomNumber(1, 5),
-    generateRandomNumber(1, 5),
-    generateRandomNumber(1, 5),
-    generateRandomNumber(1, 5),
-    generateRandomNumber(1, 5),
-    generateRandomNumber(1, 5),
-    faker.lorem.paragraph(4)
-  ]);
-}
+  // userResult.push([
+  //   faker.name.firstName(),
+  //   avatars[generateRandomNumber(0, 10)],
+  // ]);
 
-console.log(numberResult);
+  // reviewResult.push([
+  //   generateRandomNumber(1, 10),
+  //   generateRandomNumber(1, 10),
+  //   faker.lorem.paragraph(generateRandomNumber(1, 3)),
+  //   `${months[generateRandomNumber(0, 11)]} ${years[generateRandomNumber(0, 8)]}`
+  // ]);
+
+  // roomResult.push([
+  //   i,
+  //   generateRandomNumber(1, 5),
+  //   generateRandomNumber(1, 5),
+  //   generateRandomNumber(1, 5),
+  //   generateRandomNumber(1, 5),
+  //   generateRandomNumber(1, 5),
+  //   generateRandomNumber(1, 5),
+  //   generateRandomNumber(1, 5),
+  //   generateRandomNumber(1, 5),
+  // ]);
