@@ -7,3 +7,6 @@ bundle.js
 .eslintrc.json
 mockups
 jest.config.js
+review.csv
+room.csv
+user.csv
