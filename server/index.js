@@ -36,7 +36,7 @@ app.get('/api/reviews/rooms/:roomid/', (req, res) => {
 app.get('/api/ratings/rooms/:roomid', (req, res) => {
   const { roomid } = req.params;
   pg
-    .getReviews(roomid)
+    .getRatingsOrReviews(roomid, 'ratings')
     .then(reviews => { // reviews is an object
       res.send(reviews);
     })

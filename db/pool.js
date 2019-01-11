@@ -13,7 +13,7 @@ pool.on('error', (err, client) => {
   process.exit(-1);
 });
 
-const getRatings = (roomid) => {
+const getRatings = roomid => {
   return new Promise((resolve, reject) => {
     pool.connect((err, client, release) => {
       if (err) { reject(err); }
@@ -27,6 +27,23 @@ const getRatings = (roomid) => {
   });
 };
 
+
+const getRatingsOrReviews = (roomid, string) => {
+  return new Promise((resolve, reject) => {
+    pool.connect((err, client, release) => {
+      if (err) { reject(err); }
+      const query = string === 'ratings' 
+        ? 'SELECT * FROM rooms WHERE roomid = $1' 
+        : 'SELECT * FROM reviews WHERE roomid';
+      client.query(query, [`${roomid}`], (err, result) => {
+        release();
+        if (err) { reject(err); }
+        resolve(result.rows[0]);
+      });
+    });
+  });
+};
+
 module.exports = {
-  getRatings,
+  getRatingsOrReviews,
 };
