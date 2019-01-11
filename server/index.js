@@ -11,11 +11,10 @@ app.use('/rooms/:roomid', express.static('./public/dist'));
 
 app.get('/api/reviews/rooms/:roomid/', (req, res) => { 
   // queries the rooms array to get all reviews and the user attached to the review
-
-  // const { roomid } = req.params;
-  // const { page } = req.query;
-  // const { search } = req.query;
-  // const { sortby } = req.query || 'relevant';
+  const { roomid } = req.params;
+  const { page } = req.query;
+  const { search } = req.query;
+  const { sortby } = req.query || 'relevant';
 
   // query
   //   .getAllReviews(roomid)
