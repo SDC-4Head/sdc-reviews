@@ -21,7 +21,6 @@ const getReviews = (roomid) => {
       client.query(query, [`${roomid}`], (err, result) => {
         release();
         if (err) { reject(err); }
-        console.log(result.rows[0]);
         resolve(result.rows[0]);
       });
     });
