@@ -42,14 +42,6 @@ app.get('/api/ratings/rooms/:roomid', (req, res) => {
       res.send(reviews);
     })
     .catch(err => { if (err) { console.log('err 1') } });
-  // query
-  //   .getAllReviews(roomid)
-  //   .then(allReviews => res.send(query.calculateAverageRating(allReviews)))
-  //   .catch(err => {
-  //     if (err) {
-  //       throw err;
-  //     }
-  //   });
 });
 
 app.put('/api/reviews/rooms/:roomId'), (req, res) => {
