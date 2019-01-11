@@ -16,6 +16,15 @@ app.get('/api/reviews/rooms/:roomid/', (req, res) => {
   const { search } = req.query;
   const { sortby } = req.query || 'relevant';
 
+  pg
+    .getRatingsOrReviews(roomid, 'reviews')
+    .then(reviews => 
+      sortby === 'relevant' || sortby === undefined
+        ? pg.sortByRelevant(reviews)
+        : pg.sortByRecent(reviews)
+    )
+    .catch(err => { if (err) throw err; })
+
   // query
   //   .getAllReviews(roomid)
   //   .then(allReviews =>
