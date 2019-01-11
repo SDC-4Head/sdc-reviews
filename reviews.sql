@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS reviews (
   reviewid SERIAL PRIMARY KEY,
   userid INTEGER REFERENCES users(userid),
+  roomid INTEGER REFERENCES rooms(roomid),
   relevance INTEGER,
   body VARCHAR(30),
   date VARCHAR(20)
@@ -20,7 +21,6 @@ CREATE TABLE IF NOT EXISTS reviews (
 
 CREATE TABLE IF NOT EXISTS rooms (
   roomid SERIAL PRIMARY KEY,
-  reviewid INTEGER REFERENCES reviews(reviewid),
   accuracy INTEGER,
   checkin INTEGER,
   cleanliness INTEGER,
