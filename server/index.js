@@ -23,7 +23,10 @@ app.get('/api/reviews/rooms/:roomid/', (req, res) => {
         ? pg.sortByRelevant(reviews)
         : pg.sortByRecent(reviews)
     )
-    .catch(err => { if (err) throw err; })
+    .then(sortedReviews => pg.getBySearchTerm(sortedReviews, search))
+    .then(sortedReviews => pg.getPage(page, sortedReviews))
+    .then(pageOfReviews => res.send(pageOfReviews))
+    .catch(err => { if (err) { console.log('err 1',err)} })
 
   // query
   //   .getAllReviews(roomid)
