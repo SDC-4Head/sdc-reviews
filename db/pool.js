@@ -1,11 +1,11 @@
-const { Client } = require('pg');
+const { Pool } = require('pg');
 
 const pool = new Pool({
   user: 'francisdistor',
   host: 'localhost',
   database: 'reviewsdb',
   password: 'root',
-  port: 9000,
+  port: 5432,
 });
 
 pool.on('error', (err, client) => {
@@ -13,14 +13,17 @@ pool.on('error', (err, client) => {
   process.exit(-1);
 });
 
-const getReviews = () => {
-  pool.connect((err, client, release) => {
-    if (err) { throw err; }
-    const query = 'SELECT * FROM ';
-    client.query(query, value, (err, result) => {
-      release();
-      if (err) { throw err; }
-      console.log(result.rows);
+const getReviews = (roomid) => {
+  return new Promise((resolve, reject) => {
+    pool.connect((err, client, release) => {
+      if (err) { reject(err); }
+      const query = 'SELECT * FROM rooms WHERE roomid = $1';
+      client.query(query, [`${roomid}`], (err, result) => {
+        release();
+        if (err) { reject(err); }
+        console.log(result.rows[0]);
+        resolve(result.rows[0]);
+      });
     });
   });
 };
