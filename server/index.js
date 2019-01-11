@@ -46,9 +46,7 @@ app.get('/api/ratings/rooms/:roomid', (req, res) => {
   const { roomid } = req.params;
   pg
     .getRatingsOrReviews(roomid, 'ratings')
-    .then(reviews => { // reviews is an object
-      res.send(reviews);
-    })
+    .then(reviews => res.send(reviews))
     .catch(err => { if (err) { console.log('err 1') } });
 });
 
