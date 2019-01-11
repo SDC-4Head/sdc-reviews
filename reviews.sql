@@ -10,19 +10,10 @@ CREATE TABLE IF NOT EXISTS users (
   userid SERIAL PRIMARY KEY
 );
 
-CREATE TABLE IF NOT EXISTS reviews (
-  reviewid SERIAL PRIMARY KEY,
-  userid INTEGER REFERENCES users(userid),
-  relevance INTEGER,
-  body VARCHAR(30),
-  date VARCHAR(20)
-);
-
 CREATE TABLE IF NOT EXISTS rooms (
   roomid SERIAL PRIMARY KEY,
-  reviewid INTEGER REFERENCES reviews(reviewid),
   accuracy INTEGER,
-  chekin INTEGER,
+  checkin INTEGER,
   cleanliness INTEGER,
   communication INTEGER,
   location INTEGER,
@@ -31,14 +22,23 @@ CREATE TABLE IF NOT EXISTS rooms (
   value INTEGER
 );
 
+CREATE TABLE IF NOT EXISTS reviews (
+  reviewid SERIAL PRIMARY KEY,
+  userid INTEGER REFERENCES users(userid),
+  roomid INTEGER REFERENCES rooms(roomid),
+  relevance INTEGER,
+  body VARCHAR(30),
+  date VARCHAR(20)
+);
+
 COPY users (firstname, profilepic)
 FROM '/Users/francisdistor/Desktop/immersive/sdc/hrsf107-fec-reviews/user.csv' 
 DELIMITER ',' CSV;
 
-COPY reviews (userid, relevance, body, date)
+COPY reviews (userid, roomid, relevance, body, date)
 FROM '/Users/francisdistor/Desktop/immersive/sdc/hrsf107-fec-reviews/review.csv' 
 DELIMITER ',' CSV;
 
-COPY rooms (reviewid, accuracy, chekin, cleanliness, communication, location, overall, quality, value)
+COPY rooms (accuracy, checkin, cleanliness, communication, location, overall, quality, value)
 FROM '/Users/francisdistor/Desktop/immersive/sdc/hrsf107-fec-reviews/room.csv' 
 DELIMITER ',' CSV;
