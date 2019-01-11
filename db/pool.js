@@ -20,11 +20,14 @@ module.exports = {
         if (err) { reject(err); }
         const query = string === 'ratings' 
           ? `SELECT * FROM rooms WHERE roomid = ${roomid}` 
-          : `SELECT * FROM reviews WHERE roomid`;
+          : `SELECT firstname, profilepic, relevance, body, date FROM reviews
+            LEFT JOIN users on reviews.userid = users.userid
+            RIGHT JOIN rooms ON reviews.roomid = rooms.roomid
+            WHERE rooms.roomid = ${roomid};`;
         client.query(query, (err, result) => {
           release();
           if (err) { reject(err); }
-          resolve(result.rows[0]);
+          string === 'ratings' ? resolve(result.rows[0]) : resolve(result.rows);
         });
       });
     });
