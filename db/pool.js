@@ -63,4 +63,52 @@ module.exports = {
         ? resolve(allReviews)
         : resolve(allReviews.filter(review => review.review[0].body.includes(query)));
     }),
+
+  calculateAverageRating: allReviews => {
+    // eslint-disable-next-line no-new
+    const ratings = {
+      quantity: allReviews.length,
+      overall: 0,
+      accuracy: 0,
+      communication: 0,
+      cleanliness: 0,
+      location: 0,
+      checkin: 0,
+      value: 0
+    };
+    console.log(allReviews, '1');
+
+    // eslint-disable-next-line guard-for-in
+    allReviews.forEach(review => {
+      console.log(review, '2');
+      ratings.accuracy = (ratings.accuracy + review.review[0].accuracy) / 2;
+      ratings.communication = (ratings.communication + review.review[0].communication) / 2;
+      ratings.cleanliness = (ratings.cleanliness + review.review[0].cleanliness) / 2;
+      ratings.location = (ratings.location + review.review[0].location) / 2;
+      ratings.checkin = (ratings.checkin + review.review[0].checkin) / 2;
+      ratings.value = (ratings.value + review.review[0].value) / 2;
+    });
+
+    ratings.overall =
+      (ratings.accuracy +
+        ratings.communication +
+        ratings.cleanliness +
+        ratings.location +
+        ratings.checkin +
+        ratings.value) /
+      6;
+
+    const roundToHalfValue = () => {
+      ratings.accuracy = Math.round(ratings.accuracy * 2) / 2;
+      ratings.communication = Math.round(ratings.communication * 2) / 2;
+      ratings.cleanliness = Math.round(ratings.cleanliness * 2) / 2;
+      ratings.location = Math.round(ratings.location * 2) / 2;
+      ratings.checkin = Math.round(ratings.checkin * 2) / 2;
+      ratings.value = Math.round(ratings.value * 2) / 2;
+      ratings.overall = Math.round(ratings.overall * 2) / 2;
+    };
+
+    roundToHalfValue();
+    return ratings;
+  }
 };

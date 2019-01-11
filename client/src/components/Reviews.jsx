@@ -33,6 +33,7 @@ class Reviews extends React.Component {
         this.setState({
           ratings: data
         });
+        console.log(data);
       },
       error: err => {
         throw err;
