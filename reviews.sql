@@ -10,18 +10,8 @@ CREATE TABLE IF NOT EXISTS users (
   userid SERIAL PRIMARY KEY
 );
 
-CREATE TABLE IF NOT EXISTS reviews (
-  reviewid SERIAL PRIMARY KEY,
-  userid INTEGER REFERENCES users(userid),
-  roomid INTEGER REFERENCES rooms(roomid),
-  relevance INTEGER,
-  body VARCHAR(30),
-  date VARCHAR(20)
-);
-
 CREATE TABLE IF NOT EXISTS rooms (
   roomid SERIAL PRIMARY KEY,
-  reviewid INTEGER REFERENCES reviews(reviewid),
   accuracy INTEGER,
   checkin INTEGER,
   cleanliness INTEGER,
@@ -30,6 +20,15 @@ CREATE TABLE IF NOT EXISTS rooms (
   overall INTEGER,
   quality INTEGER,
   value INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS reviews (
+  reviewid SERIAL PRIMARY KEY,
+  userid INTEGER REFERENCES users(userid),
+  roomid INTEGER REFERENCES rooms(roomid),
+  relevance INTEGER,
+  body VARCHAR(30),
+  date VARCHAR(20)
 );
 
 COPY users (firstname, profilepic)
