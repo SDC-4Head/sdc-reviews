@@ -14,7 +14,7 @@
     "build": "webpack",
     "start": "npm run seed && node ./server/index.js",
     "test": "jest --watch",
-    "generate": "node ./db/utlities/newSeeder.js",
+    "generate": "node ./db/utilities/newSeeder.js",
     "populate": "psql -d reviews -a -f reviews.sql"
   },
   "dependencies": {
