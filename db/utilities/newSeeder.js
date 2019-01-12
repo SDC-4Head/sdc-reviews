@@ -54,11 +54,11 @@ const userStream = fs.createWriteStream('user.csv', {flags: 'w'});
 const reviewStream = fs.createWriteStream('review.csv', {flags: 'w'});
 const roomStream = fs.createWriteStream('room.csv', {flags: 'w'});
 
-let count = 3e7 + 1;
+let count = 1e7 + 1;
 
 const write = () => {
   while (count > 0) {
-    const review = `${generateRandomNumber(1, 2e6 + 1)},${generateRandomNumber(0, 1e7)},${generateRandomNumber(0, 10)},Hello WORLD,${months[generateRandomNumber(0, 11)]} ${years[generateRandomNumber(0, 8)]},${generateRandomNumber(1, 5)},${generateRandomNumber(1, 5)},${generateRandomNumber(1, 5)},${generateRandomNumber(1, 5)},${generateRandomNumber(1, 5)},${generateRandomNumber(1, 5)}\n`;
+    const review = `${generateRandomNumber(1, 2e6 + 1)},${generateRandomNumber(1, 1e7)},${generateRandomNumber(0, 10)},Hello WORLD,${months[generateRandomNumber(0, 11)]} ${years[generateRandomNumber(0, 8)]},${generateRandomNumber(1, 5)},${generateRandomNumber(1, 5)},${generateRandomNumber(1, 5)},${generateRandomNumber(1, 5)},${generateRandomNumber(1, 5)},${generateRandomNumber(1, 5)}\n`;
     if (!reviewStream.write(review)) { return; }
     if (count < 2e6 + 1) {
       const user = `${faker.name.firstName()},${avatars[generateRandomNumber(0, 10)]}\n`
