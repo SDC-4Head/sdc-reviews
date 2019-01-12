@@ -18,7 +18,11 @@ module.exports = {
     return new Promise((resolve, reject) => {
       pool.connect((err, client, release) => {
         if (err) { reject(err); }
-        const query = `SELECT * FROM rooms WHERE roomid = ${roomid}`;
+        const query = 
+          `SELECT * FROM reviews
+          LEFT JOIN users on reviews.userid = users.userid
+          RIGHT JOIN rooms ON reviews.roomid = rooms.roomid
+          WHERE rooms.roomid = ${roomid};`;
         client.query(query, (err, result) => {
           release();
           if (err) { reject(err); }
