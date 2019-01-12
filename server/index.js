@@ -38,21 +38,26 @@ app.get('/api/ratings/rooms/:roomid', (req, res) => {
 
 app.put('/api/reviews/rooms/:roomId'), (req, res) => {
   const { roomid } = req.params;
-  // const { page } = req.query;
-  // const { search } = req.query;
-  // const { sortby } = req.query || 'relevant';
-
-
+  pg
+    .updateReview(roomid)
+    .then(() => res.statusCode(200).end())
+    .catch(err => res.statusCode(500));
 };
 
 app.post('/api/reviews/rooms/:roomId'), (req, res) => {
   const { roomid } = req.params;
-
+  pg
+    .createReview(roomid)
+    .then(() => res.statusCode(200).end())
+    .catch(err => res.statusCode(500));
 };
 
 app.delete('/api/reviews/rooms/:roomId'), (req, res) => {
   const { roomid } = req.params;
-
+  pg
+    .deleteReview(roomid)
+    .then(() => res.statusCode(200).end())
+    .catch(err => res.statusCode(500));
 };
 
 app.listen(port, () => console.log(`Listening on http://localhost:${port}`));
