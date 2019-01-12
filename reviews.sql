@@ -12,11 +12,6 @@ CREATE TABLE IF NOT EXISTS users (
   userAvatar VARCHAR(120)
 );
 
-CREATE TABLE IF NOT EXISTS rooms (
-  roomid SERIAL PRIMARY KEY,
-  roomname VARCHAR(15)
-);
-
 CREATE TABLE IF NOT EXISTS reviews (
   reviewid SERIAL PRIMARY KEY,
   userid INTEGER REFERENCES users(userid),
@@ -34,10 +29,6 @@ CREATE TABLE IF NOT EXISTS reviews (
 
 COPY users (name, userAvatar)
 FROM '/Users/francisdistor/Desktop/immersive/sdc/hrsf107-fec-reviews/user.csv' 
-DELIMITER ',' CSV;
-
-COPY rooms (roomname)
-FROM '/Users/francisdistor/Desktop/immersive/sdc/hrsf107-fec-reviews/room.csv' 
 DELIMITER ',' CSV;
 
 COPY reviews (userid, roomid, relevance, body, date, accuracy, checkin, cleanliness, communication, location, value)

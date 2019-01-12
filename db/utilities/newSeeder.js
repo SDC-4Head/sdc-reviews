@@ -52,9 +52,8 @@ const generateRandomNumber = (min, max) => {
 
 const userStream = fs.createWriteStream('user.csv', {flags: 'w'}); 
 const reviewStream = fs.createWriteStream('review.csv', {flags: 'w'});
-const roomStream = fs.createWriteStream('room.csv', {flags: 'w'});
 
-let count = 1e7 + 1;
+let count = 5e7 + 1;
 
 const write = () => {
   while (count > 0) {
@@ -64,15 +63,10 @@ const write = () => {
       const user = `${faker.name.firstName()},${avatars[generateRandomNumber(0, 10)]}\n`
       if (!userStream.write(user)) { return; }
     }
-    if (count < 1e7 + 1) {
-      const room = `room${count}\n`
-      if (!roomStream.write(room)) { return; }
-    }
     count--;
   }
   userStream.end();
   reviewStream.end();
-  roomStream.end();
   const then = Date.now();
   const min = (then - now) * 1.666e-5;
   const roundMin = Math.trunc(min);
@@ -82,6 +76,5 @@ const write = () => {
 
 userStream.on('drain', () => write());
 reviewStream.on('drain', () => write());
-roomStream.on('drain', () => write());
 const now = Date.now();
 write();
