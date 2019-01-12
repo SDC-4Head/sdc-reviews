@@ -26,7 +26,6 @@ module.exports = {
         client.query(query, (err, result) => {
           release();
           if (err) { reject(err); }
-          console.log(result.rows);
           resolve(result.rows);
         });
       });
@@ -79,13 +78,15 @@ module.exports = {
 
     // eslint-disable-next-line guard-for-in
     allReviews.forEach(review => {
-      ratings.accuracy = (ratings.accuracy + review.review[0].accuracy) / 2;
-      ratings.communication = (ratings.communication + review.review[0].communication) / 2;
-      ratings.cleanliness = (ratings.cleanliness + review.review[0].cleanliness) / 2;
-      ratings.location = (ratings.location + review.review[0].location) / 2;
-      ratings.checkin = (ratings.checkin + review.review[0].checkin) / 2;
-      ratings.value = (ratings.value + review.review[0].value) / 2;
+      console.log(review, 'koko de');
+      ratings.accuracy = (ratings.accuracy + review.accuracy) / 2;
+      ratings.communication = (ratings.communication + review.communication) / 2;
+      ratings.cleanliness = (ratings.cleanliness + review.cleanliness) / 2;
+      ratings.location = (ratings.location + review.location) / 2;
+      ratings.checkin = (ratings.checkin + review.checkin) / 2;
+      ratings.value = (ratings.value + review.value) / 2;
     });
+    console.log('koko de ni');
 
     ratings.overall =
       (ratings.accuracy +
