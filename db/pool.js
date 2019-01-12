@@ -53,8 +53,9 @@ module.exports = {
       pool.connect((err, client, release) => {
         if (err) { reject(err); }
         const query = 
-        `
-        `;
+          `UPDATE reviews 
+          SET body='newbody'
+          WHERE roomid = ${roomid};`;
         client.query(query, (err, result) => {
           release();
           if (err) { reject(err); }
