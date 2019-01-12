@@ -15,30 +15,17 @@ app.get('/api/reviews/rooms/:roomid/', (req, res) => {
   const { search } = req.query;
   const { sortby } = req.query || 'relevant';
 
-  // pg
-  //   .getRatingsOrReviews(roomid, 'reviews')
-  //   .then(reviews => 
-  //     sortby === 'relevant' || sortby === undefined
-  //       ? pg.sortByRelevant(reviews)
-  //       : pg.sortByRecent(reviews)
-  //   )
-  //   .catch(err => { if (err) throw err; })
-
-  // query
-  //   .getAllReviews(roomid)
-  //   .then(allReviews =>
-  //     sortby === 'relevant' || sortby === undefined
-  //       ? query.sortByRelevant(allReviews)
-  //       : query.sortByRecent(allReviews)
-  //   )
-  //   .then(sortedReviews => query.getBySearchTerm(sortedReviews, search))
-  //   .then(sortedReviews => query.getPage(page, sortedReviews))
-  //   .then(pageOfReviews => res.send(pageOfReviews))
-  //   .catch(err => {
-  //     if (err) {
-  //       throw err;
-  //     }
-  //   });
+  pg
+    .getReviews(roomid)
+    .then(reviews => 
+      sortby === 'relevant' || sortby === undefined
+        ? pg.sortByRelevant(reviews)
+        : pg.sortByRecent(reviews)
+    )
+    .then(sortedReviews => pg.getBySearchTerm(sortedReviews, search))
+    .then(sortedReviews => pg.getPage(page, sortedReviews))
+    .then(pageOfReviews => res.send(pageOfReviews))
+    .catch(err => { if (err) throw err; });
 });
 
 app.get('/api/ratings/rooms/:roomid', (req, res) => {
