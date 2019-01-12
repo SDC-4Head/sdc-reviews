@@ -54,18 +54,18 @@ const userStream = fs.createWriteStream('user.csv', {flags: 'w'});
 const reviewStream = fs.createWriteStream('review.csv', {flags: 'w'});
 const roomStream = fs.createWriteStream('room.csv', {flags: 'w'});
 
-let count = 3e7 + 1;
+let count = 1e7 + 1;
 
 const write = () => {
   while (count > 0) {
-    const review = `${generateRandomNumber(1, 2e6 + 1)},${generateRandomNumber(0, 1e7)},${generateRandomNumber(0, 10)},Hello WORLD,${months[generateRandomNumber(0, 11)]} ${years[generateRandomNumber(0, 8)]}\n`;
+    const review = `${generateRandomNumber(1, 2e6 + 1)},${generateRandomNumber(1, 1e7)},${generateRandomNumber(0, 10)},Hello WORLD,${months[generateRandomNumber(0, 11)]} ${years[generateRandomNumber(0, 8)]},${generateRandomNumber(1, 5)},${generateRandomNumber(1, 5)},${generateRandomNumber(1, 5)},${generateRandomNumber(1, 5)},${generateRandomNumber(1, 5)},${generateRandomNumber(1, 5)}\n`;
     if (!reviewStream.write(review)) { return; }
     if (count < 2e6 + 1) {
       const user = `${faker.name.firstName()},${avatars[generateRandomNumber(0, 10)]}\n`
       if (!userStream.write(user)) { return; }
     }
     if (count < 1e7 + 1) {
-      const room = `${generateRandomNumber(1, 5)},${generateRandomNumber(1, 5)},${generateRandomNumber(1, 5)},${generateRandomNumber(1, 5)},${generateRandomNumber(1, 5)},${generateRandomNumber(1, 5)},${generateRandomNumber(1, 5)},${generateRandomNumber(1, 5)}\n`
+      const room = `room${count}\n`
       if (!roomStream.write(room)) { return; }
     }
     count--;
@@ -73,10 +73,15 @@ const write = () => {
   userStream.end();
   reviewStream.end();
   roomStream.end();
+  const then = Date.now();
+  const min = (then - now) * 1.666e-5;
+  const roundMin = Math.trunc(min);
+  const sec = Math.trunc((min - Math.trunc(min)) * 60);
+  console.log(`Time to run ${roundMin} minutes ${sec} seconds`);
 };
 
 userStream.on('drain', () => write());
 reviewStream.on('drain', () => write());
 roomStream.on('drain', () => write());
-
+const now = Date.now();
 write();
