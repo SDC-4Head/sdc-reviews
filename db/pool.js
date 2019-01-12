@@ -78,7 +78,6 @@ module.exports = {
 
     // eslint-disable-next-line guard-for-in
     allReviews.forEach(review => {
-      console.log(review, 'koko de');
       ratings.accuracy = (ratings.accuracy + review.accuracy) / 2;
       ratings.communication = (ratings.communication + review.communication) / 2;
       ratings.cleanliness = (ratings.cleanliness + review.cleanliness) / 2;
@@ -86,7 +85,6 @@ module.exports = {
       ratings.checkin = (ratings.checkin + review.checkin) / 2;
       ratings.value = (ratings.value + review.value) / 2;
     });
-    console.log('koko de ni');
 
     ratings.overall =
       (ratings.accuracy +
