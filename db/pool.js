@@ -69,8 +69,7 @@ module.exports = {
       pool.connect((err, client, release) => {
         if (err) { reject(err); }
         const query = 
-        `
-        `;
+        `DELETE FROM reviews WHERE roomid = ${roomid};`;
         client.query(query, (err, result) => {
           release();
           if (err) { reject(err); }
