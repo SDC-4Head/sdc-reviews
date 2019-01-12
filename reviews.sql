@@ -43,3 +43,5 @@ DELIMITER ',' CSV;
 COPY reviews (userid, roomid, relevance, body, date, accuracy, checkin, cleanliness, communication, location, value)
 FROM '/Users/francisdistor/Desktop/immersive/sdc/hrsf107-fec-reviews/review.csv' 
 DELIMITER ',' CSV;
+
+CREATE INDEX roomidindex ON reviews (roomid);
