@@ -37,8 +37,8 @@ module.exports = {
       pool.connect((err, client, release) => {
         if (err) { reject(err); }
         const query = 
-        `
-        `;
+          `INSERT INTO reviews (userid, roomid, relevance, body, date, accuracy, checkin, cleanliness, communication, location, value)
+          VALUES (1, ${roomid}, 8, 'Lorem ipsum cadabra', 'January 2019', 4, 5, 2, 5, 3, 2);`;
         client.query(query, (err, result) => {
           release();
           if (err) { reject(err); }
