@@ -12,7 +12,7 @@
     "builddev": "webpack --watch",
     "startdev": "nodemon ./server/index.js",
     "build": "webpack",
-    "start": "npm run seed && node ./server/index.js",
+    "start": "node ./server/index.js",
     "test": "jest --watch",
     "generate-pg": "node ./db/utilities/newSeeder.js",
     "populate-pg": "psql -d reviews -a -f reviews.sql",
