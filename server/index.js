@@ -1,6 +1,6 @@
+const nr = require('newrelic');
 const express = require('express');
 const bodyParser = require('body-parser');
-// const query = require('../db/querys.js');
 const pg = require('../db/pool.js');
 
 const app = express();
