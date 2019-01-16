@@ -10,3 +10,6 @@ jest.config.js
 review.csv
 room.csv
 user.csv
+cassandra.csv
+newrelic.js
+newrelic_agent.log

@@ -12,10 +12,12 @@
     "builddev": "webpack --watch",
     "startdev": "nodemon ./server/index.js",
     "build": "webpack",
-    "start": "npm run seed && node ./server/index.js",
+    "start": "node ./server/index.js",
     "test": "jest --watch",
-    "generate": "node ./db/utilities/newSeeder.js",
-    "populate": "psql -d reviews -a -f reviews.sql"
+    "generate-pg": "node ./db/utilities/newSeeder.js",
+    "populate-pg": "psql -d reviews -a -f reviews.sql",
+    "generate-cs": "node ./db/utilities/casseeder.js",
+    "populate-cs": "cqlsh < reviews.cql"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
@@ -53,6 +55,7 @@
     "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-react": "^7.11.1",
     "jest": "^23.6.0",
+    "newrelic": "^5.0.0",
     "nodemon": "^1.18.9",
     "pg": "^7.7.1",
     "prettier": "^1.15.3",
