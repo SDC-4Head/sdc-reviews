@@ -60,7 +60,6 @@ const generateRandomReviews = () => {
   obj.location = generateRandomNumber(1, 5);
   obj.checkin = generateRandomNumber(1, 5);
   obj.value = generateRandomNumber(1, 5);
-  // let string = `{'body': '${body}', 'accuracy': '${accuracy}', 'communication': '${communication}', 'cleanliness': '${communication}', 'location': '${location}', 'checkin': '${checkin}', 'value': '${value}'}`;
   result.push(obj);
   return result;
 };
