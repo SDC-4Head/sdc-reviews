@@ -14,8 +14,10 @@
     "build": "webpack",
     "start": "npm run seed && node ./server/index.js",
     "test": "jest --watch",
-    "generate": "node ./db/utilities/newSeeder.js",
-    "populate": "psql -d reviews -a -f reviews.sql"
+    "generate-pg": "node ./db/utilities/newSeeder.js",
+    "populate-pg": "psql -d reviews -a -f reviews.sql",
+    "generate-cs": "node ./db/utilities/casseeder.js",
+    "populate-cs": "cqlsh < reviews.cql"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
