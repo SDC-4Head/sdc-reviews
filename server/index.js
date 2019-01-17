@@ -16,7 +16,6 @@ app.get('/api/reviews/rooms/:roomid/', (req, res) => {
   const { page } = req.query;
   const { search } = req.query;
   const { sortby } = req.query || 'relevant';
-
   pg
     .getReviews(roomid)
     .then(reviews => 
@@ -41,28 +40,28 @@ app.get('/api/ratings/rooms/:roomid', (req, res) => {
     .catch(err => { if (err) throw err; });
 });
 
-app.put('/api/reviews/rooms/:roomId'), (req, res) => {
+app.put('/api/reviews/rooms/:roomid', (req, res) => {
   const { roomid } = req.params;
   pg
     .updateReview(roomid)
-    .then(() => res.statusCode(200).end())
-    .catch(err => res.statusCode(500));
-};
+    .then(() => res.status(200).end())
+    .catch(err => res.status(500).end());
+});
 
-app.post('/api/reviews/rooms/:roomId'), (req, res) => {
+app.post('/api/reviews/rooms/:roomid/', (req, res) => {
   const { roomid } = req.params;
   pg
     .createReview(roomid)
-    .then(() => res.statusCode(200).end())
-    .catch(err => res.statusCode(500));
-};
+    .then(() => res.status(200).end())
+    .catch(err => res.status(500).end());
+});
 
-app.delete('/api/reviews/rooms/:roomId'), (req, res) => {
+app.delete('/api/reviews/rooms/:roomid', (req, res) => {
   const { roomid } = req.params;
   pg
     .deleteReview(roomid)
-    .then(() => res.statusCode(200).end())
-    .catch(err => res.statusCode(500));
-};
+    .then(() => res.status(200).end())
+    .catch(err => res.status(500).end());
+});
 
 app.listen(port, () => console.log(`Listening on http://localhost:${port}`));
