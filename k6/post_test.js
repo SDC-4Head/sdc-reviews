@@ -13,7 +13,6 @@ export default function() {
   let res = http.post(`${baseUrl}/api/reviews/rooms/${num}`);
   check(res, {
     'status is 200': r => r.status === 200,
-    'status is 500': r => r.status === 500,
   })
   sleep(1);
 };
