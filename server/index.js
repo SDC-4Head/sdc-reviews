@@ -80,7 +80,7 @@ app.post('/api/reviews/rooms/:roomId'), (req, res) => {
             .then(reviews => client.set(`/reviews/${roomid}`, JSON.stringify(reviews), 'EX', 120));
         }
       });
-      res.statusCode(200).end()
+      res.statusCode(200).end();
     })
     .catch(err => res.statusCode(500));
 };
