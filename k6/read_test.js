@@ -3,7 +3,7 @@ import { sleep, check } from "k6";
 
 export let options = {
   vus: 1000,
-  duration: '60s',
+  duration: '300s',
 }
 
 export default function() {
@@ -12,5 +12,4 @@ export default function() {
   check(res, {
     'status is 200': r => r.status === 200,
   })
-  sleep(1);
 };
