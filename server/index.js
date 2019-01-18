@@ -33,7 +33,7 @@ app.get('/api/reviews/rooms/:roomid/', (req, res) => {
       .then(sortedReviews => pg.getBySearchTerm(sortedReviews, search))
       .then(sortedReviews => pg.getPage(page, sortedReviews))
       .then(pageOfReviews => {
-        client.set(`/reviews/${roomid}`, JSON.stringify(pageOfReviews), redis.print);
+        client.set(`/reviews/${roomid}`, JSON.stringify(pageOfReviews), 'EX', 120);
         res.send(pageOfReviews);
       })
       .catch(err => { if (err) throw err; });
