@@ -72,7 +72,16 @@ app.post('/api/reviews/rooms/:roomId'), (req, res) => {
   const { roomid } = req.params;
   pg
     .createReview(roomid)
-    .then(() => res.statusCode(200).end())
+    .then(() => {
+      client.get(`/reviews/${roomid}`, (err, result) => {
+        if (result) { 
+          pg.
+            getReviews(roomid)
+            .then(reviews => client.set(`/reviews/${roomid}`, JSON.stringify(reviews), 'EX', 120));
+        }
+      });
+      res.statusCode(200).end()
+    })
     .catch(err => res.statusCode(500));
 };
 
