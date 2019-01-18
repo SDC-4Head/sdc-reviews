@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const pg = require('../db/pool.js');
 const redis = require('redis');
+const morgan = require('morgan');
 
 const app = express();
 const port = 3124;
@@ -14,6 +15,7 @@ client.on('error', err => console.log('Failed to connect to Redis.'));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/rooms/:roomid', express.static('./public/dist'));
+app.use(morgan());
 
 app.get('/api/reviews/rooms/:roomid/', (req, res) => { 
   const { roomid } = req.params;
@@ -60,15 +62,15 @@ app.get('/api/ratings/rooms/:roomid', (req, res) => {
   });
 });
 
-app.put('/api/reviews/rooms/:roomId'), (req, res) => {
+app.put('/api/reviews/rooms/:roomid', (req, res) => {
   const { roomid } = req.params;
   pg
     .updateReview(roomid)
-    .then(() => res.statusCode(200).end())
-    .catch(err => res.statusCode(500));
-};
+    .then(() => res.status(200).end())
+    .catch(err => res.status(500).end());
+});
 
-app.post('/api/reviews/rooms/:roomId'), (req, res) => {
+app.post('/api/reviews/rooms/:roomid/', (req, res) => {
   const { roomid } = req.params;
   pg
     .createReview(roomid)
@@ -83,14 +85,14 @@ app.post('/api/reviews/rooms/:roomId'), (req, res) => {
       res.statusCode(200).end();
     })
     .catch(err => res.statusCode(500));
-};
+});
 
-app.delete('/api/reviews/rooms/:roomId'), (req, res) => {
+app.delete('/api/reviews/rooms/:roomid', (req, res) => {
   const { roomid } = req.params;
   pg
     .deleteReview(roomid)
-    .then(() => res.statusCode(200).end())
-    .catch(err => res.statusCode(500));
-};
+    .then(() => res.status(200).end())
+    .catch(err => res.status(500).end());
+});
 
 app.listen(port, () => console.log(`Listening on http://localhost:${port}`));
