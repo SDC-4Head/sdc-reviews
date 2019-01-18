@@ -60,6 +60,7 @@
     "nodemon": "^1.18.9",
     "pg": "^7.7.1",
     "prettier": "^1.15.3",
+    "redis": "^2.8.0",
     "regenerator-runtime": "^0.13.1",
     "style-loader": "^0.23.1",
     "webpack": "^4.28.0"
