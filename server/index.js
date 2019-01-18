@@ -45,10 +45,19 @@ app.get('/api/reviews/rooms/:roomid/', (req, res) => {
 
 app.get('/api/ratings/rooms/:roomid', (req, res) => {
   const { roomid } = req.params;
-  pg
-    .getReviews(roomid)
-    .then(reviews => res.send(pg.calculateAverageRating(reviews)))
-    .catch(err => { if (err) throw err; });
+  client.get(`/ratings/${roomid}`, (err, result) => {
+    if (err || result === null) {
+      return pg
+        .getReviews(roomid)
+        .then(reviews => {
+          const averageRatings = pg.calculateAverageRating(reviews);
+          client.set(`/ratings/${roomid}`, JSON.stringify(averageRatings), 'EX', 120);
+          res.send(averageRatings);
+        })
+        .catch(err => { if (err) throw err; });
+    }
+    res.send(JSON.parse(result));
+  });
 });
 
 app.put('/api/reviews/rooms/:roomId'), (req, res) => {
