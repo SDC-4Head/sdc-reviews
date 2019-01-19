@@ -19,9 +19,9 @@ module.exports = {
       pool.connect((err, client, release) => {
         if (err) { reject(err); }
         const query = 
-          `SELECT (relevance, body, date, accuracy, checkin, cleanliness, communication, location, value, name, useravatar) FROM reviews
+          `SELECT relevance, body, date, accuracy, checkin, cleanliness, communication, location, value, name, useravatar FROM reviews
           LEFT JOIN users on reviews.userid = users.userid
-          WHERE rooms.roomid = ${roomid};`;
+          WHERE roomid = ${roomid};`;
         client.query(query, (err, result) => {
           release();
           if (err) { reject(err); }
