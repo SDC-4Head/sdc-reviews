@@ -7,7 +7,7 @@ export let options = {
 }
 
 export default function() {
-  let num = Math.floor((Math.random() * 10000000) + 1)
+  let num = Math.floor((Math.random() * 10000000) + 1);
   let res = http.get(`http://localhost:3124/rooms/${num}`);
   check(res, {
     'status is 200': r => r.status === 200,
