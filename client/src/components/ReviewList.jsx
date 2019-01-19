@@ -77,6 +77,41 @@ class ReviewList extends React.Component {
     this.getReviews(window.location.pathname + window.location.search);
   }
 
+  sortByRelevant(allReviews) {
+    new Promise(resolve => {
+      const byRelevance = (a, b) => b.relevance - a.relevance;
+      resolve(allReviews.sort(byRelevance));
+    })
+  }
+
+  sortByRecent(allReviews) {
+    new Promise(resolve => {
+      const byDate = (a, b) => new Date(b.dateStayed) - new Date(a.dateStayed);
+      resolve(allReviews.sort(byDate));
+    })
+  }
+
+  getPage(page = 1, allReviews) {
+    new Promise(resolve => {
+      const firstReview = page === 1 ? 0 : (page - 1) * 7;
+      const lastReview = firstReview + 7;
+
+      resolve(
+        lastReview < allReviews.length
+          ? allReviews.slice(firstReview, lastReview)
+          : allReviews.slice(firstReview)
+      );
+    })
+  }
+
+  getBySearchTerm(allReviews, query = null) {
+    new Promise(resolve => {
+      query === null
+        ? resolve(allReviews)
+        : resolve(allReviews.filter(review => review.review[0].body.includes(query)));
+    })
+  }
+
   getReviews(path, searchterm = null) {
     $.ajax({
       url: `/api/reviews${path}`,
