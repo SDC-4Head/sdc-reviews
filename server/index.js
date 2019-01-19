@@ -56,9 +56,8 @@ app.get('/api/ratings/rooms/:roomid', (req, res) => {
       return pg
         .getReviews(roomid)
         .then(reviews => {
-          const averageRatings = pg.calculateAverageRating(reviews);
-          client.set(`/ratings/${roomid}`, JSON.stringify(averageRatings), 'EX', 600);
-          res.send(averageRatings);
+          client.set(`ratings/${roomid}`, JSON.stringify(reviews), 'EX', 600);
+          res.send(reviews);
         })
         .catch(err => { if (err) throw err; });
     }
