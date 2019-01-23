@@ -2,13 +2,7 @@ const { Pool } = require('pg');
 const local = require('./utilities/config_local.js');
 const ec2 = require('./utilities/config_ec2.js');
 
-const pool = new Pool({
-  user: 'francisdistor',
-  host: 'localhost',
-  database: 'reviewsdb',
-  password: 'root',
-  port: 5432,
-});
+const pool = new Pool(ec2);
 
 pool.on('error', (err, client) => {
   console.error('Unexpected error on idle client', err);
