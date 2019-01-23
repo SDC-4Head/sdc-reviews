@@ -4,9 +4,9 @@ const ec2 = require('./utilities/config_ec2.js');
 
 const pool = new Pool(ec2);
 
-pool.on('error', (err, client) => {
-  console.error('Unexpected error on idle client', err);
-  process.exit(-1);
+pool.connect(err => {
+  if (err) throw err;
+  console.log('connected to DB.');
 });
 
 module.exports = {

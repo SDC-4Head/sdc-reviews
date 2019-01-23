@@ -6,7 +6,7 @@ const pg = require('../db/pool.js');
 const morgan = require('morgan');
 
 const app = express();
-const port = '0.0.0.0:3124';
+const port = 3124;
 
 // const client = redis.createClient();
 
