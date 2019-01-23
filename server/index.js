@@ -47,19 +47,21 @@ app.get('/api/reviews/rooms/:roomid/', (req, res) => {
 
 app.get('/api/ratings/rooms/:roomid', (req, res) => {
   const { roomid } = req.params;
-  client.get(`ratings/${roomid}`, (err, result) => {
-    if (err || result === null) {
-      return pg
+  // client.get(`ratings/${roomid}`, (err, result) => {
+    // if (err || result === null) {
+      // return 
+      pg
         .getReviews(roomid)
         .then(reviews => {
-          client.set(`ratings/${roomid}`, JSON.stringify(reviews), 'EX', 600);
+          // client.set(`ratings/${roomid}`, JSON.stringify(reviews), 'EX', 600);
           res.send(reviews);
         })
         .catch(err => { if (err) throw err; });
     }
-    res.send(JSON.parse(result));
-  });
-});
+    // res.send(JSON.parse(result));
+  // });
+// }
+);
 
 app.put('/api/reviews/rooms/:roomid', (req, res) => {
   const { roomid } = req.params;
