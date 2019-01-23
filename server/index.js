@@ -96,4 +96,4 @@ app.delete('/api/reviews/rooms/:roomid', (req, res) => {
     .catch(err => res.status(500).end());
 });
 
-app.listen(port, () => console.log(`Listening on http://localhost:${port}`));
+// app.listen(port, () => console.log(`Listening on http://localhost:${port}`));
