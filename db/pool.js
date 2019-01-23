@@ -1,4 +1,6 @@
 const { Pool } = require('pg');
+const local = require('./utilities/config_local.js');
+const ec2 = require('./utilities/config_ec2.js');
 
 const pool = new Pool({
   user: 'francisdistor',
