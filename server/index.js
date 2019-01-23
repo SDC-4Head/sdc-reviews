@@ -2,13 +2,13 @@ const nr = require('newrelic');
 const express = require('express');
 const bodyParser = require('body-parser');
 const pg = require('../db/pool.js');
-const redis = require('redis');
+// const redis = require('redis');
 const morgan = require('morgan');
 
 const app = express();
 const port = 3124;
 
-const client = redis.createClient();
+// const client = redis.createClient();
 
 // client.on('connect', () => console.log('Connected to Redis.'));
 // client.on('error', err => console.log('Failed to connect to Redis.'));
