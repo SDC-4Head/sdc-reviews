@@ -12,6 +12,10 @@ const client = redis.createClient();
 
 client.on('connect', () => console.log('Connected to Redis.'));
 client.on('error', err => console.log('Failed to connect to Redis.'));
+client.flushall((err, success) => {
+  if (err) { return console.log('Could not flush.'); }
+  console.log('Success in flush!');
+});
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/rooms/:roomid', express.static('./public/dist'));
@@ -23,21 +27,15 @@ app.get('/api/reviews/rooms/:roomid/', (req, res) => {
   const { search } = req.query;
   const { sortby } = req.query || 'relevant';
 
-  client.get(`/reviews/${roomid}`, (err, result) => {
+  client.get(`reviews/${roomid}`, (err, result) => {
     if (err || result === null) {
       return pg
       .getReviews(roomid)
-      .then(reviews => 
-        sortby === 'relevant' || sortby === undefined
-          ? pg.sortByRelevant(reviews)
-          : pg.sortByRecent(reviews)
+      .then(reviews => {
+        client.set(`reviews/${roomid}`, JSON.stringify(reviews), 'EX', 600);
+        res.send(reviews);
+        }
       )
-      .then(sortedReviews => pg.getBySearchTerm(sortedReviews, search))
-      .then(sortedReviews => pg.getPage(page, sortedReviews))
-      .then(pageOfReviews => {
-        client.set(`/reviews/${roomid}`, JSON.stringify(pageOfReviews), 'EX', 120);
-        res.send(pageOfReviews);
-      })
       .catch(err => { if (err) throw err; });
     }
     res.send(JSON.parse(result));
@@ -47,14 +45,13 @@ app.get('/api/reviews/rooms/:roomid/', (req, res) => {
 
 app.get('/api/ratings/rooms/:roomid', (req, res) => {
   const { roomid } = req.params;
-  client.get(`/ratings/${roomid}`, (err, result) => {
+  client.get(`ratings/${roomid}`, (err, result) => {
     if (err || result === null) {
       return pg
         .getReviews(roomid)
         .then(reviews => {
-          const averageRatings = pg.calculateAverageRating(reviews);
-          client.set(`/ratings/${roomid}`, JSON.stringify(averageRatings), 'EX', 120);
-          res.send(averageRatings);
+          client.set(`ratings/${roomid}`, JSON.stringify(reviews), 'EX', 600);
+          res.send(reviews);
         })
         .catch(err => { if (err) throw err; });
     }
@@ -79,7 +76,7 @@ app.post('/api/reviews/rooms/:roomid/', (req, res) => {
         if (result) { 
           pg.
             getReviews(roomid)
-            .then(reviews => client.set(`/reviews/${roomid}`, JSON.stringify(reviews), 'EX', 120));
+            .then(reviews => client.set(`/reviews/${roomid}`, JSON.stringify(reviews), 'EX', 600));
         }
       });
       res.statusCode(200).end();
