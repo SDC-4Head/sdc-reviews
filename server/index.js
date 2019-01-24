@@ -2,6 +2,7 @@ const nr = require('newrelic');
 const express = require('express');
 const bodyParser = require('body-parser');
 const pg = require('../db/pool.js');
+const path = require('path');
 // const redis = require('redis');
 const morgan = require('morgan');
 
@@ -62,6 +63,10 @@ app.get('/api/ratings/rooms/:roomid', (req, res) => {
   // });
 // }
 );
+
+app.get('/loaderio-c18f14f92a812cf5b5567ed3b1a9e2ae', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/dist', 'loaderio-c18f14f92a812cf5b5567ed3b1a9e2ae.txt'))
+})
 
 app.put('/api/reviews/rooms/:roomid', (req, res) => {
   const { roomid } = req.params;
