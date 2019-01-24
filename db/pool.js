@@ -2,7 +2,7 @@ const { Pool } = require('pg');
 const local = require('./utilities/config_local.js');
 const ec2 = require('./utilities/config_ec2.js');
 
-const pool = new Pool(local);
+const pool = new Pool(ec2);
 
 pool.connect(err => {
   if (err) throw err;
