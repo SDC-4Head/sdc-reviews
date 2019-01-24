@@ -13,3 +13,6 @@ user.csv
 cassandra.csv
 newrelic.js
 newrelic_agent.log
+db/utilities/config_ec2.js
+db/utilities/config_local.js
+server/config/config.redis.js
