@@ -26,6 +26,8 @@
 
 - Node 11.6.0
 - About 5GB available storage
+- Redis
+- PostgreSQL
 
 ## Usage
 
