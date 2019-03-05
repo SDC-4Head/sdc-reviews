@@ -4,10 +4,9 @@
 
 ## Related Projects
 
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
+  - https://github.com/SDC-4Head/sdc-image-gallery2
+  - https://github.com/SDC-4Head/sdc-recommends
+  - https://github.com/SDC-4Head/hrsf107-fec-booking
 
 ## Table of Contents
 
