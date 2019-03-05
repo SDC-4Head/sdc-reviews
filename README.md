@@ -31,7 +31,7 @@
 
 ## Usage
 
-1. Clone to repo to your desktop.
+1. Clone repo to your desktop.
 1. Go to your terminal and navigate to root directory of repo, then execute ```npm install``` to install dependencies.
 1. Configure the `pool` variable in the `pool.js` file of the `db` folder to the settings for your PostgreSQL on your computer.
 1. Start up PostgreSQL server on your computer.
